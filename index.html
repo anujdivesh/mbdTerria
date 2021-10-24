@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>MB-UAT</title>
+</head>
+
+<body>
+    <iframe id="embeddedNationalMap" src="https://terriajs.uat.spc.links.com.au/#spc&hideWorkbench=1&start=%7B%22initSources%22%3A%5B%7B%22initialCamera%22%3A%7B%22west%22%3A-179.06461920169278%2C%22south%22%3A-35.92548947255254%2C%22east%22%3A-114.42936706339692%2C%22north%22%3A-2.961851371966698%7D%7D%5D%7D" width="100%" height="768"></iframe>
+
+    <script type="text/javascript">
+    /*
+        window.addEventListener('message', function(e) {
+            var iframeWindow = document.getElementById('embeddedNationalMap').contentWindow;
+            if (e.source === iframeWindow && e.data === 'ready') {
+                // NationalMap is ready to receive messages!
+                iframeWindow.postMessage({
+                    initSources: [
+                    {
+                        "workbench": ["1"],
+                        "catalog": [
+                        {
+                            "type": "group",
+                            "name": "Crews Datasets",
+                            "members": [
+                                {
+                                    "id": "1",
+                                    "name": "Hs",
+                                    "layers": "1/Hs",
+                                    "url": "http://202.62.118.201:8080/ncWMS2/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0&DATASET=1",               
+                                    "type": "wms"
+                                },
+                                {
+                                "id": "sss",
+                                "name": "Tp",
+                                "layers": "1/Tp",
+                                "url": "http://202.62.118.201:8080/ncWMS2/wms?SERVICE=WMS&REQUEST=GetCapabilities&VERSION=1.3.0&DATASET=1",               
+                                "type": "wms"
+                            }
+                            ]
+                        }
+                        ],
+                        "homeCamera": {
+                        "west": 176.72849572223166,
+                        "south": 19.331499922789956,
+                        "east": 178.87050330120584,
+                        "north": -17.729500901184654
+                        }
+                    }
+                    ]
+                }, 'http://localhost:8090/');
+                map = document.getElementById('embeddedNationalMap');
+          iframe = map.contentWindow;
+          origin = map.src;
+                fetch('https://pacificdata.org/sites/default/files/mbd/eez-FJ.json')
+          .then(res => res.json())
+          .then((data) => {
+            if (data) {
+            zonesGeoJson = data;
+            window.setTimeout(function(){
+              iframe.postMessage({interactiveLayer: true, type: 'zone.add', items: zonesGeoJson}, origin);
+
+              zonesGeoJson.forEach(function(item){
+                iframe.postMessage({interactiveLayer: true, type: 'zone.show', id: item.id}, origin);
+              });
+
+              iframe.postMessage({interactiveLayer: true, type: 'layer.enable'}, origin);
+            }, 20000);
+          }
+          });          
+
+            }
+
+
+          
+        });*/
+    window.addEventListener('message', e => {
+
+        if (e.data === 'ready') {
+          map = document.getElementById('embeddedNationalMap');
+          iframe = map.contentWindow;
+          origin = map.src;
+          
+          window.setTimeout(function(){
+            $('.globe').removeClass('loader');
+          }, 50000);
+          
+
+         // iframe.postMessage({"initSources":[{"initialCamera":{"west": 145.65364175379182,"south": -22.15106845160314,"east": -156.55733400327983,"north": 12.164394494917866}}]}, origin);
+          fetch('https://pacificdata.org/sites/default/files/mbd/boundaries-FJ.json')
+            .then(res => res.json())
+            .then((data) => {      
+              if (data) {
+                  console.log(data)
+                borersGeoJson = data;
+                window.setTimeout(function(){
+                  iframe.postMessage({interactiveLayer: true, type: 'zone.add', items: borersGeoJson}, origin);
+
+                  borersGeoJson.forEach(function(item){
+                    iframe.postMessage({interactiveLayer: true, type: 'zone.show', id: item.id}, origin);
+                  });
+
+                  iframe.postMessage({interactiveLayer: true, type: 'layer.enable'}, origin);
+                }, 15000);
+              }
+          });
+          /*
+          fetch('https://pacificdata.org/sites/default/files/mbd/eez-FJ.json')
+          .then(res => res.json())
+          .then((data) => {
+            if (data) {
+            zonesGeoJson = data;
+            window.setTimeout(function(){
+              iframe.postMessage({interactiveLayer: true, type: 'zone.add', items: zonesGeoJson}, origin);
+
+              zonesGeoJson.forEach(function(item){
+                iframe.postMessage({interactiveLayer: true, type: 'zone.show', id: item.id}, origin);
+              });
+
+              iframe.postMessage({interactiveLayer: true, type: 'layer.enable'}, origin);
+            }, 20000);
+          }
+          });          */
+          window.setTimeout(function(){
+          iframe.postMessage({
+                    initSources: [
+                    {
+                        "workbench": ["1"],
+                        "catalog": [
+                        {
+                            "type": "group",
+                            "name": "Crews Datasets",
+                            "members": [
+                                {
+                                    "id": "1",
+                                    "name": "Fiji",
+                                    "layers": "gem_mb_dashboard:fj_eez",
+                                    "url": "https://geoserver.pacificdata.org/ows?service=wms&version=1.3.0&request=GetCapabilities",               
+                                    "type": "wms"
+                                }
+                            ]
+                        }
+                        ],
+                        "homeCamera": {
+                        "west": 176.72849572223166,
+                        "south": 19.331499922789956,
+                        "east": 178.87050330120584,
+                        "north": -17.729500901184654
+                        }
+                    }
+                    ]
+                }, origin);
+                iframe.postMessage({interactiveLayer: true, type: 'layer.enable'}, origin);
+            }, 1000);
+
+         
+        }
+
+
+        if (e.data.type === 'click') {
+          map = document.getElementById('embeddedNationalMap');
+          iframe = map.contentWindow;
+          origin = map.src; 
+        //  console.log(e.data.ids.length); 
+
+
+          let clickedZoneId = null;
+          let target = {};
+          if (e.data.ids.length == 1){
+            clickedZoneId = e.data.ids[0];
+          } else if (e.data.ids.length > 1){
+            for (let i = 0; i < e.data.ids.length; i++){
+              if (e.data.ids[i].includes('limit-') || e.data.ids[i].includes('boundary-')){
+                clickedZoneId = e.data.ids[i];
+                break;
+              } else if (e.data.ids[i].includes('archipelagic-') || e.data.ids[i].includes('marine-') || e.data.ids[i].includes('contiguous-') || e.data.ids[i].includes('baseline-') || e.data.ids[i].includes('seelim-')){
+
+                switch (true) {
+                  case e.data.ids.includes('baseline-' + countryCode):
+                      clickedZoneId = 'baseline-' + countryCode;
+                      break;
+                  case e.data.ids.includes('archipelagic-' + countryCode):
+                      clickedZoneId = 'archipelagic-' + countryCode;
+                      break;                      
+                  case e.data.ids.includes('seelim-' + countryCode):
+                      clickedZoneId = 'seelim-' + countryCode;   
+                      break;
+                  case e.data.ids.includes('contiguous-' + countryCode):
+                      clickedZoneId = 'contiguous-' + countryCode;
+                      break;
+                  case e.data.ids.includes('marine-' + countryCode):
+                      clickedZoneId = 'marine-' + countryCode;
+                      break;                  
+                } 
+                
+                break;
+              } else if (e.data.ids[i].includes('shelf-')){
+                clickedZoneId = e.data.ids[i];
+              } else if (e.data.ids[i].includes('eez-')){
+                clickedZoneId = e.data.ids[i];
+              }
+            }
+          }
+
+          
+            alert(e.data.ids);
+        }
+
+    });
+    </script>
+</body>
+</html>
