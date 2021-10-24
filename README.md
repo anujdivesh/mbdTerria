@@ -1,1 +1,2 @@
 # mbdTerria
+npm install
