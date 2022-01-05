@@ -21,9 +21,9 @@ Current Setup of one Layer:
               }
           });
 ```
-The above assigns ID to each item in the Geojson, so javascript knows the id
+The above assigns ID to each item in the Geojson, so javascript knows the id of the layer which is loaded
 
-Development:
+Current Development:
 ``` 
 var mydataset = [
                     {
@@ -51,9 +51,9 @@ var mydataset = [
                         }
                     }
                     ];
-          iframe.postMessage({ id:928982, initSources: mydataset}, origin);
+          iframe.postMessage({initSources: mydataset}, origin);
  ```
   
  Problem: is there a way we can pass ID in the above postmessage, so we are able to do a callback from Javascript, this will help populate Drupal Popup. 
- As of know, Javascript does not know what layer has been passed to TerriaJS
+ As of know, Javascript does not know what layer has been passed to TerriaJS. However, we can see the layer which is loaded on the TerriaMap via WMS.
           
