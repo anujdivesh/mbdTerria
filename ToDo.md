@@ -1,5 +1,5 @@
 __Maritime Dashboard__<br /> <br /> 
-Goal: to move geoJSON layers to geoServer and serve them as WMS.
+Goal: To move geoJSON layers to geoServer and serve them as WMS.
 
 Current Setup of one Layer:
 ```
@@ -21,7 +21,7 @@ Current Setup of one Layer:
               }
           });
 ```
-The above assigns ID to each item in the Geojson, so javascript knows the id of the layer which is loaded
+The above assigns ID to each item in the Geojson, so javascript knows the id of the layer which is loaded. Thus, we are able to get the id in the in the javasript popup and know which layer is loaded.
 
 Current Development:
 ``` 
@@ -54,6 +54,5 @@ var mydataset = [
           iframe.postMessage({initSources: mydataset}, origin);
  ```
   
- Problem: is there a way we can pass ID in the above postmessage, so we are able to do a callback from Javascript, this will help populate Drupal Popup. 
- As of know, Javascript does not know what layer has been passed to TerriaJS. However, we can see the layer which is loaded on the TerriaMap via WMS.
+ Problem: As of know, Javascript does not know what layer has been passed to TerriaJS. However, we can see the layer which is loaded on the TerriaMap via WMS. When we click on the above layer in the map, we want to be able to return the ```id: 1``` in the JavaScript Popup, this will allow us to customize the popup and add additional content to the layer from elsewhere (drupal DB).
           
