@@ -54,5 +54,5 @@ var mydataset = [
           iframe.postMessage({initSources: mydataset}, origin);
  ```
   
- Problem: As of know, Javascript does not know what layer has been passed to TerriaJS. However, we can see the layer which is loaded on the TerriaMap via WMS. When we click on the above layer in the map, we want to be able to return the ```id: 1``` in the JavaScript Popup, this will allow us to customize the popup and add additional content to the layer from elsewhere (drupal DB).
+ Problem: As of know, The WMS layer 1 loads and shows successfully on TerriaMap. However, when we click on the above layer in the map, we want to be able to return the ```id: 1``` in the JavaScript Popup, this will allow us to customize the popup and add additional content to the layer from elsewhere (drupal DB). Currently, the click event does not return anything.
           
