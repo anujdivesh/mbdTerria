@@ -54,5 +54,6 @@ var mydataset = [
           iframe.postMessage({initSources: mydataset}, origin);
  ```
   
- Problem: The WMS layer ```1``` loads and shows successfully on TerriaMap. However, when we click on the above layer, nothing gets returned, whilst when we click on the GeoJSON loaded in line 6, the click event returns ```id's```. We want to be able to return the ```id: 1``` in the JavaScript Popup, this will allow us to customize the popup and add additional content to the layer from elsewhere (drupal DB).
+Problem: The WMS layer ```id:1``` loads and shows successfully on TerriaMap. However, when we click on the layer, nothing gets returned, whilst when we click on the GeoJSON loaded in line 6, the click event returns ```id's```. 
+We want to be able to return the ```id: 1``` in the JavaScript Popup, this will allow us to customize the popup and add additional content to the layer from elsewhere (drupal DB).
           
